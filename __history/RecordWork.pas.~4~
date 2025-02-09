@@ -1,0 +1,31 @@
+unit RecordWork;
+
+interface
+
+Type
+  TAppliance = Record
+    InvNumber: Integer;
+    Name: String;
+    Purpose: String;
+    ProdDate: String;
+    Price: Integer;
+  End;
+
+Function CreateRec(InvNumber, Price: Integer; Name, Purpose, ProdDate: String)
+  : TAppliance;
+
+implementation
+
+Function CreateRec(InvNumber, Price: Integer; Name, Purpose, ProdDate: String)
+  : TAppliance;
+Var
+  Res: TAppliance;
+Begin
+  Res.InvNumber := InvNumber;
+  Res.Price := Price;
+  Res.Name := Name;
+  Res.Purpose := Purpose;
+  Res.ProdDate := ProdDate;
+  CreateRec := Rec;
+End;
+end.

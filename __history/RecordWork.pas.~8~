@@ -1,0 +1,44 @@
+unit RecordWork;
+
+interface
+
+Uses System.SysUtils;
+
+Type
+  TAppliance = Record
+    InvNumber: Integer;
+    Name: String[10];
+    Purpose: String[50];
+    ProdDate: String[10];
+    Price: Integer;
+  End;
+
+Function CreateRec(InvNumber, Price: Integer; Name, Purpose, ProdDate: String)
+  : TAppliance;
+
+Procedure WriteRecToFile(RecToWrite: TAppliance; FilePath: String);
+
+implementation
+
+Function CreateRec(InvNumber, Price: Integer; Name, Purpose, ProdDate: String)
+  : TAppliance;
+Var
+  Res: TAppliance;
+Begin
+  Res.InvNumber := InvNumber;
+  Res.Price := Price;
+  Res.Name := Name;
+  Res.Purpose := Purpose;
+  Res.ProdDate := ProdDate;
+  CreateRec := Res;
+End;
+
+Procedure WriteRecsToFile(RecsToWrite: Array Of TAppliance; FilePath: String);
+Var
+  WFile: File Of TAppliance;
+Begin
+  AssignFile(WFile, FilePath);
+  Rewrite(WFile);
+End;
+
+end.

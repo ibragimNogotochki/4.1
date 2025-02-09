@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2025.02.09 21:20:34.881,=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025.02.09 21:21:12.125,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Main.pas=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025.02.09 21:21:12.125,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Main.dfm=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2025.02.09 21:25:48.557,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\InputNew.dfm=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Main.dfm</Transaction>
+    <Transaction>2025.02.09 21:25:48.557,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\InputNew.pas=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Main.pas</Transaction>
+    <Transaction>2025.02.09 21:28:14.293,=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025.02.09 21:40:37.446,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.2\RecordWork.pas=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2025.02.09 21:40:58.137,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.2\InputNew.pas=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\InputNew.pas</Transaction>
+    <Transaction>2025.02.09 21:40:58.137,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.2\InputNew.dfm=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\InputNew.dfm</Transaction>
+    <Transaction>2025.02.09 22:37:48.195,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.2\L4T1.dproj=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="InputNew.pas"/>
+    <File Path="InputNew.dfm"/>
+    <File Path="RecordWork.pas"/>
+  </ProjectSortOrder>
+</BorlandProject>
