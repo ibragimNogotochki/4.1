@@ -8,7 +8,7 @@ Type
   TAppliance = Record
     InvNumber: Integer;
     Name: String[10];
-    Purpose: String[50];
+    Purpose: String[70];
     ProdDate: String[10];
     Price: Integer;
   End;
@@ -19,6 +19,8 @@ Function CreateRec(InvNumber, Price: Integer; Name, Purpose, ProdDate: String)
   : TAppliance;
 
 Procedure WriteRecToFile(RecToWrite: TAppliance; FilePath: String);
+
+Function LoadRecsFromFile(FilePath: String): TRecArray;
 
 implementation
 
@@ -35,15 +37,19 @@ Begin
   CreateRec := Res;
 End;
 
-Procedure WriteRecsToFile(RecsToWrite: TRecArray; FilePath: String);
+Procedure WriteRecToFile(RecToWrite: TAppliance; FilePath: String);
 Var
   WFile: File Of TAppliance;
+  PrevRecs: TRecArray;
   I: Integer;
 Begin
   AssignFile(WFile, FilePath);
+  If FileExists(FilePath) Then
+    PrevRecs := LoadRecsFromfile(FilePath);
   Rewrite(WFile);
-  For I := 0 To High(RecsToWrite) Do
-    Write(WFile, RecsToWrite[I]);
+  For I := Low(PrevRecs) To High(PrevRecs) Do
+    Write(WFile, PrevRecs[I]);
+  Write(WFile, RecToWrite);
   CloseFile(WFile);
 End;
 

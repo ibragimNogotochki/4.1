@@ -124,10 +124,14 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="InputNew.pas">
-            <Form>Form1</Form>
+            <Form>InputNewForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="RecordWork.pas"/>
+        <DCCReference Include="ViewRecs.pas">
+            <Form>ViewForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
