@@ -1,7 +1,7 @@
 object InputNewForm: TInputNewForm
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1085#1086#1074#1086#1081' '#1079#1072#1087#1080#1089#1080
   ClientHeight = 83
@@ -12,7 +12,7 @@ object InputNewForm: TInputNewForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   TextHeight = 15
   object Label1: TLabel
     Left = 8
@@ -108,15 +108,6 @@ object InputNewForm: TInputNewForm
     TabOrder = 5
     OnChange = PriceEditChange
     OnKeyPress = BlockNonNums
-  end
-  object ChooseFileBtn: TBitBtn
-    Left = 490
-    Top = 4
-    Width = 78
-    Height = 35
-    Caption = #1042#1099#1073#1088#1072#1090#1100#13#10#1092#1072#1081#1083
-    TabOrder = 6
-    OnClick = ChooseFileBtnClick
   end
   object SaveDialog1: TSaveDialog
     Filter = #1041#1080#1085#1072#1088#1085#1099#1081' '#1092#1072#1081#1083'(.bin)|*.bin'

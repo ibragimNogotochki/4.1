@@ -35,8 +35,9 @@ begin
   ShowGrid.Cells[2, 0] := 'Наименование';
   ShowGrid.Cells[3, 0] := 'Назначение';
   ShowGrid.Cells[4, 0] := 'Дата выпуска';
-  Recs := LoadRecsFromFile('a.bin');
+  Recs := LoadRecsFromFile('dat.bin');
   ShowGrid.RowCount := Length(Recs) + 1;
+  SortRecsByInv(Recs);
   For I := 0 To High(Recs) Do
   Begin
     ShowGrid.Cells[0, I + 1] := IntToStr(Recs[I].InvNumber);

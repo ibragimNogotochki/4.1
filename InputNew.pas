@@ -22,7 +22,6 @@ type
     Label6: TLabel;
     PriceEdit: TEdit;
     SaveDialog1: TSaveDialog;
-    ChooseFileBtn: TBitBtn;
     procedure WriteBtnClick(Sender: TObject);
     procedure NameEditChange(Sender: TObject);
     procedure PurposeEditChange(Sender: TObject);
@@ -30,11 +29,9 @@ type
     procedure PriceEditChange(Sender: TObject);
     procedure ProdDateEditChange(Sender: TObject);
     procedure BlockNonNums(Sender: TObject; var Key: Char);
-    procedure ChooseFileBtnClick(Sender: TObject);
   private
-    FilePath: String;
     IsInvNumCorrect, IsPriceCorrect, IsNameCorrect, IsPurposeCorrect,
-      IsDateCorrect, IsFileChosen: Boolean;
+      IsDateCorrect: Boolean;
   public
     { Public declarations }
   end;
@@ -46,21 +43,6 @@ implementation
 
 {$R *.dfm}
 
-procedure TInputNewForm.ChooseFileBtnClick(Sender: TObject);
-Var
-  Temp: File;
-begin
-  If SaveDialog1.Execute Then
-  Begin
-    FilePath := SaveDialog1.FileName;
-    If  Not (Copy(FilePath, High(FilePath) - 4, 4) = '.bin') Then
-      FilePath := FilePath + '.bin';
-    IsFileChosen := True;
-  End;
-  WriteBtn.Enabled := IsInvNumCorrect And IsPriceCorrect And IsNameCorrect And
-    IsPurposeCorrect And IsDateCorrect And IsFileChosen;
-end;
-
 procedure TInputNewForm.BlockNonNums(Sender: TObject; var Key: Char);
 begin
   If Not CharInSet(Key, ['0' .. '9', #8]) Then
@@ -71,45 +53,47 @@ procedure TInputNewForm.InvNumEditChange(Sender: TObject);
 begin
   IsInvNumCorrect := Not(InvNumEdit.Text = '');
   WriteBtn.Enabled := IsInvNumCorrect And IsPriceCorrect And IsNameCorrect And
-    IsPurposeCorrect And IsDateCorrect And IsFileChosen;
+    IsPurposeCorrect And IsDateCorrect;
 end;
 
 procedure TInputNewForm.NameEditChange(Sender: TObject);
 begin
   IsNameCorrect := Not(NameEdit.Text = '');
   WriteBtn.Enabled := IsInvNumCorrect And IsPriceCorrect And IsNameCorrect And
-    IsPurposeCorrect And IsDateCorrect And IsFileChosen;
+    IsPurposeCorrect And IsDateCorrect;
 end;
 
 procedure TInputNewForm.PriceEditChange(Sender: TObject);
 begin
   IsPriceCorrect := Not(PriceEdit.Text = '');
   WriteBtn.Enabled := IsInvNumCorrect And IsPriceCorrect And IsNameCorrect And
-    IsPurposeCorrect And IsDateCorrect And IsFileChosen;
+    IsPurposeCorrect And IsDateCorrect;
 end;
 
 procedure TInputNewForm.ProdDateEditChange(Sender: TObject);
 begin
   IsDateCorrect := Not(ProdDateEdit.Text = '');
   WriteBtn.Enabled := IsInvNumCorrect And IsPriceCorrect And IsNameCorrect And
-    IsPurposeCorrect And IsDateCorrect And IsFileChosen;
+    IsPurposeCorrect And IsDateCorrect;
 end;
 
 procedure TInputNewForm.PurposeEditChange(Sender: TObject);
 begin
   IsPurposeCorrect := Not(PurposeEdit.Text = '');
   WriteBtn.Enabled := IsInvNumCorrect And IsPriceCorrect And IsNameCorrect And
-    IsPurposeCorrect And IsDateCorrect And IsFileChosen;
+    IsPurposeCorrect And IsDateCorrect;
 end;
 
 Procedure TInputNewForm.WriteBtnClick(Sender: TObject);
+Const
+  FilePath: String = 'dat.bin';
 Var
   RecToWrite: TAppliance;
 Begin
   RecToWrite := CreateRec(StrToInt(InvNumEdit.Text), StrToInt(PriceEdit.Text),
     NameEdit.Text, PurposeEdit.Text, ProdDateEdit.Text);
   WriteRecToFile(RecToWrite, FilePath);
-  ShowMessage('Записано');
+  MessageBox(Self.Handle, 'Запись добавлена!', 'Успех' , MB_OK);
 End;
 
 end.

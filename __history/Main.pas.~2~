@@ -1,0 +1,40 @@
+unit Main;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
+
+type
+  TMainForm = class(TForm)
+    MainMenu1: TMainMenu;
+    Files: TMenuItem;
+    Funcs: TMenuItem;
+    AddRecs: TMenuItem;
+    CorrectRecs: TMenuItem;
+    N5: TMenuItem;
+    ViewRecs: TMenuItem;
+    N7: TMenuItem;
+    DeleteRecs: TMenuItem;
+    AboutDev: TMenuItem;
+    Open: TMenuItem;
+    Save: TMenuItem;
+    N12: TMenuItem;
+    Quit: TMenuItem;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  MainForm: TMainForm;
+
+implementation
+
+{$R *.dfm}
+
+
+
+end.

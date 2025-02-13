@@ -15,17 +15,19 @@ Type
 
   TRecArray = Array Of TAppliance;
 
-Function CreateRec(InvNumber, Price: Integer; Name, Purpose, ProdDate: String)
-  : TAppliance;
+Function CreateRec(Const InvNumber, Price: Integer;
+  Const Name, Purpose, ProdDate: String): TAppliance;
 
-Procedure WriteRecToFile(RecToWrite: TAppliance; FilePath: String);
+Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
 
-Function LoadRecsFromFile(FilePath: String): TRecArray;
+Function LoadRecsFromFile(Const FilePath: String): TRecArray;
+
+Procedure SortRecsByInv(Var Recs: TRecArray);
 
 implementation
 
-Function CreateRec(InvNumber, Price: Integer; Name, Purpose, ProdDate: String)
-  : TAppliance;
+Function CreateRec(Const InvNumber, Price: Integer;
+  Const Name, Purpose, ProdDate: String): TAppliance;
 Var
   Res: TAppliance;
 Begin
@@ -37,7 +39,7 @@ Begin
   CreateRec := Res;
 End;
 
-Procedure WriteRecToFile(RecToWrite: TAppliance; FilePath: String);
+Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
 Var
   WFile: File Of TAppliance;
   PrevRecs: TRecArray;
@@ -45,7 +47,7 @@ Var
 Begin
   AssignFile(WFile, FilePath);
   If FileExists(FilePath) Then
-    PrevRecs := LoadRecsFromfile(FilePath);
+    PrevRecs := LoadRecsFromFile(FilePath);
   Rewrite(WFile);
   For I := Low(PrevRecs) To High(PrevRecs) Do
     Write(WFile, PrevRecs[I]);
@@ -53,7 +55,7 @@ Begin
   CloseFile(WFile);
 End;
 
-Function LoadRecsFromFile(FilePath: String): TRecArray;
+Function LoadRecsFromFile(Const FilePath: String): TRecArray;
 Var
   RFile: File Of TAppliance;
   Res: TRecArray;
@@ -68,4 +70,21 @@ Begin
   LoadRecsFromFile := Res;
 End;
 
+Procedure SortRecsByInv(Var Recs: TRecArray);
+Var
+  I, J: Integer;
+  Temp: TAppliance;
+Begin
+  For I := 1 To High(Recs) Do
+  Begin
+    J:= I;
+    While((J > 0) And (Recs[J-1].InvNumber > Recs[J].InvNumber)) Do
+    Begin
+      Temp := Recs[J - 1];
+      Recs[J - 1] := Recs[J];
+      Recs[J] := Temp;
+      Dec(J);
+    End;
+  End;
+End;
 end.

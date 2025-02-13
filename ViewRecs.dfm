@@ -1,7 +1,7 @@
 object ViewForm: TViewForm
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = #1055#1088#1086#1089#1084#1086#1090#1088' '#1089#1074#1077#1076#1077#1085#1080#1081
   ClientHeight = 172
@@ -12,7 +12,7 @@ object ViewForm: TViewForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
+  Position = poMainFormCenter
   OnCreate = FormCreate
   TextHeight = 15
   object ShowGrid: TStringGrid

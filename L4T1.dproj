@@ -132,6 +132,14 @@
             <Form>ViewForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Main.pas">
+            <Form>MainForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="About.pas">
+            <Form>AboutForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
