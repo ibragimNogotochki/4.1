@@ -1,8 +1,9 @@
-unit RecordWork;
+Unit RecordWork;
 
-interface
+Interface
 
-Uses System.SysUtils;
+Uses
+  System.SysUtils;
 
 Type
   TAppliance = Record
@@ -15,19 +16,19 @@ Type
 
   TRecArray = Array Of TAppliance;
 
-Function CreateRec(Const InvNumber, Price: Integer;
-  Const Name, Purpose, ProdDate: String): TAppliance;
+Function CreateRec(Const InvNumber, Price: Integer; Const Name, Purpose, ProdDate: String): TAppliance;
 
 Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
+
+Procedure ClearFile(Const FilePath: String);
 
 Function LoadRecsFromFile(Const FilePath: String): TRecArray;
 
 Procedure SortRecsByInv(Var Recs: TRecArray);
 
-implementation
+Implementation
 
-Function CreateRec(Const InvNumber, Price: Integer;
-  Const Name, Purpose, ProdDate: String): TAppliance;
+Function CreateRec(Const InvNumber, Price: Integer; Const Name, Purpose, ProdDate: String): TAppliance;
 Var
   Res: TAppliance;
 Begin
@@ -70,6 +71,15 @@ Begin
   LoadRecsFromFile := Res;
 End;
 
+Procedure ClearFile(Const FilePath: String);
+Var
+  FileToClear: File Of TAppliance;
+Begin
+  AssignFile(FileToClear, FilePath);
+  Rewrite(FileToClear);
+  CloseFile(FileToClear);
+End;
+
 Procedure SortRecsByInv(Var Recs: TRecArray);
 Var
   I, J: Integer;
@@ -77,8 +87,8 @@ Var
 Begin
   For I := 1 To High(Recs) Do
   Begin
-    J:= I;
-    While((J > 0) And (Recs[J-1].InvNumber > Recs[J].InvNumber)) Do
+    J := I;
+    While ((J > 0) And (Recs[J - 1].InvNumber > Recs[J].InvNumber)) Do
     Begin
       Temp := Recs[J - 1];
       Recs[J - 1] := Recs[J];
@@ -87,4 +97,5 @@ Begin
     End;
   End;
 End;
-end.
+
+End.

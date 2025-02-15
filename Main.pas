@@ -1,14 +1,27 @@
-unit Main;
+Unit Main;
 
-interface
+Interface
 
-uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, InputNew, ViewRecs, About,
-  Vcl.StdCtrls, Vcl.Buttons;
+Uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.Menus,
+  InputNew,
+  ViewRecs,
+  About,
+  Vcl.StdCtrls,
+  Vcl.Buttons,
+  RecordWork;
 
-type
-  TMainForm = class(TForm)
+Type
+  TMainForm = Class(TForm)
     MainMenu1: TMainMenu;
     Files: TMenuItem;
     AboutDev: TMenuItem;
@@ -20,59 +33,64 @@ type
     ViewRecs: TBitBtn;
     DeleteRecs: TBitBtn;
     CorrectRecs: TBitBtn;
-    procedure AddRecsClick(Sender: TObject);
-    procedure ViewRecsClick(Sender: TObject);
-    procedure AboutDevClick(Sender: TObject);
+    Procedure AddRecsClick(Sender: TObject);
+    Procedure ViewRecsClick(Sender: TObject);
+    Procedure AboutDevClick(Sender: TObject);
     Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
-  private
+    Procedure DeleteRecsClick(Sender: TObject);
+  Private
     { Private declarations }
-  public
-    { Public declarations }
-  end;
+  Public
+    Const MainFilePath: String = 'dat.bin';
+  End;
 
-var
+Var
   MainForm: TMainForm;
   InputNewForm: TInputNewForm;
   AboutForm: TAboutForm;
 
-implementation
+Implementation
 
 {$R *.dfm}
 
-
-
-procedure TMainForm.AboutDevClick(Sender: TObject);
-begin
+Procedure TMainForm.AboutDevClick(Sender: TObject);
+Begin
   Application.CreateForm(TAboutForm, AboutForm);
   AboutForm.ShowModal;
   AboutForm.Destroy;
   AboutForm := Nil;
-end;
+End;
 
-procedure TMainForm.AddRecsClick(Sender: TObject);
-begin
+Procedure TMainForm.AddRecsClick(Sender: TObject);
+Begin
   Application.CreateForm(TInputNewForm, InputNewForm);
   InputNewForm.ShowModal;
   InputNewForm.Destroy;
   InputNewForm := Nil;
-end;
+End;
 
-procedure TMainForm.ViewRecsClick(Sender: TObject);
-begin
+Procedure TMainForm.DeleteRecsClick(Sender: TObject);
+Begin
+  ExitCode := MessageBox(MainForm.Handle, 'Удалить все записи?', 'Подтверждение', MB_ICONQUESTION + MB_YESNO);
+  If ExitCode = ID_YES Then
+    ClearFile(MainFilePath);
+End;
+
+Procedure TMainForm.ViewRecsClick(Sender: TObject);
+Begin
   Application.CreateForm(TViewForm, ViewForm);
   ViewForm.ShowModal;
   ViewForm.Destroy;
   ViewForm := Nil;
-end;
+End;
 
 Procedure TMainForm.FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
 Begin
-    ExitCode := MessageBox(MainForm.Handle, 'Выйти?', 'Подтверждение', MB_ICONQUESTION + MB_YESNO);
-    If ExitCode = ID_YES Then
-      CanClose := True
-    Else
-      CanClose := False;
+  ExitCode := MessageBox(MainForm.Handle, 'Выйти?', 'Подтверждение', MB_ICONQUESTION + MB_YESNO);
+  If ExitCode = ID_YES Then
+    CanClose := True
+  Else
+    CanClose := False;
 End;
 
-
-end.
+End.

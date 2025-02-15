@@ -41,6 +41,7 @@ object MainForm: TMainForm
     Height = 49
     Caption = #1059#1076#1072#1083#1080#1090#1100#13#10#1079#1072#1087#1080#1089#1080
     TabOrder = 2
+    OnClick = DeleteRecsClick
   end
   object CorrectRecs: TBitBtn
     Left = 151
