@@ -4,27 +4,26 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, InputNew, ViewRecs, About;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, InputNew, ViewRecs, About,
+  Vcl.StdCtrls, Vcl.Buttons;
 
 type
   TMainForm = class(TForm)
     MainMenu1: TMainMenu;
     Files: TMenuItem;
-    Funcs: TMenuItem;
-    AddRecs: TMenuItem;
-    CorrectRecs: TMenuItem;
-    N5: TMenuItem;
-    ViewRecs: TMenuItem;
-    N7: TMenuItem;
-    DeleteRecs: TMenuItem;
     AboutDev: TMenuItem;
     Open: TMenuItem;
     Save: TMenuItem;
     N12: TMenuItem;
     Quit: TMenuItem;
+    AddNewBtn: TBitBtn;
+    ViewRecs: TBitBtn;
+    DeleteRecs: TBitBtn;
+    CorrectRecs: TBitBtn;
     procedure AddRecsClick(Sender: TObject);
     procedure ViewRecsClick(Sender: TObject);
     procedure AboutDevClick(Sender: TObject);
+    Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
   private
     { Private declarations }
   public
@@ -65,5 +64,15 @@ begin
   ViewForm.Destroy;
   ViewForm := Nil;
 end;
+
+Procedure TMainForm.FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
+Begin
+    ExitCode := MessageBox(MainForm.Handle, 'Выйти?', 'Подтверждение', MB_ICONQUESTION + MB_YESNO);
+    If ExitCode = ID_YES Then
+      CanClose := True
+    Else
+      CanClose := False;
+End;
+
 
 end.
