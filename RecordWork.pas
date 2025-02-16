@@ -15,8 +15,15 @@ Type
   End;
 
   TRecArray = Array Of TAppliance;
+  PAppliance = ^TAppliance;
 
-Function CreateRec(Const InvNumber, Price: Integer; Const Name, Purpose, ProdDate: String): TAppliance;
+Function CreateRec(Const InvNumber, Price: Integer;
+  Const Name, Purpose, ProdDate: String): TAppliance;
+
+Procedure RewriteRecsToFile(Var Recs: TRecArray; Const FilePath: String);
+
+Procedure RewriteRec(RecPointer: PAppliance; Const InvNumber, Price: Integer;
+  Const Name, Purpose, ProdDate: String);
 
 Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
 
@@ -28,7 +35,8 @@ Procedure SortRecsByInv(Var Recs: TRecArray);
 
 Implementation
 
-Function CreateRec(Const InvNumber, Price: Integer; Const Name, Purpose, ProdDate: String): TAppliance;
+Function CreateRec(Const InvNumber, Price: Integer;
+  Const Name, Purpose, ProdDate: String): TAppliance;
 Var
   Res: TAppliance;
 Begin
@@ -38,6 +46,18 @@ Begin
   Res.Purpose := Purpose;
   Res.ProdDate := ProdDate;
   CreateRec := Res;
+End;
+
+Procedure RewriteRecsToFile(Var Recs: TRecArray; Const FilePath: String);
+Var
+  I: Integer;
+  WFile: File Of TAppliance;
+Begin
+  AssignFile(WFile, FilePath);
+  Rewrite(WFile);
+  For I := Low(Recs) To High(Recs) Do
+    Write(WFile, Recs[I]);
+    CloseFile(WFile);
 End;
 
 Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
@@ -69,6 +89,16 @@ Begin
     Read(RFile, Res[I]);
   CloseFile(RFile);
   LoadRecsFromFile := Res;
+End;
+
+Procedure RewriteRec(RecPointer: PAppliance; Const InvNumber, Price: Integer;
+  Const Name, Purpose, ProdDate: String);
+Begin
+  RecPointer.InvNumber := InvNumber;
+  RecPointer.Price := Price;
+  RecPointer.Name := Name;
+  RecPointer.Purpose := Purpose;
+  RecPointer.ProdDate := ProdDate;
 End;
 
 Procedure ClearFile(Const FilePath: String);

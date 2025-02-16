@@ -12,7 +12,9 @@ object InputNewForm: TInputNewForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  KeyPreview = True
   Position = poMainFormCenter
+  OnKeyPress = FormKeyPress
   TextHeight = 15
   object Label1: TLabel
     Left = 8

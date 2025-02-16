@@ -29,6 +29,7 @@ type
     procedure PriceEditChange(Sender: TObject);
     procedure ProdDateEditChange(Sender: TObject);
     procedure BlockNonNums(Sender: TObject; var Key: Char);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     IsInvNumCorrect, IsPriceCorrect, IsNameCorrect, IsPurposeCorrect,
       IsDateCorrect: Boolean;
@@ -47,6 +48,12 @@ procedure TInputNewForm.BlockNonNums(Sender: TObject; var Key: Char);
 begin
   If Not CharInSet(Key, ['0' .. '9', #8]) Then
     Key := #0;
+end;
+
+procedure TInputNewForm.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  If Key = #27 Then
+    Close;
 end;
 
 procedure TInputNewForm.InvNumEditChange(Sender: TObject);

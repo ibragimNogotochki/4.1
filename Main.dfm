@@ -50,6 +50,7 @@ object MainForm: TMainForm
     Height = 49
     Caption = #1050#1086#1088#1088#1077#1082#1090#1080#1088#1086#1074#1072#1090#1100#13#10#1079#1072#1087#1080#1089#1080
     TabOrder = 3
+    OnClick = CorrectRecsClick
   end
   object MainMenu1: TMainMenu
     Left = 408

@@ -12,8 +12,10 @@ object ViewForm: TViewForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  KeyPreview = True
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
   TextHeight = 15
   object ShowGrid: TStringGrid
     Left = 0

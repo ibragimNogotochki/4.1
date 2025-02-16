@@ -18,7 +18,8 @@ Uses
   About,
   Vcl.StdCtrls,
   Vcl.Buttons,
-  RecordWork;
+  RecordWork,
+  CorrRecs;
 
 Type
   TMainForm = Class(TForm)
@@ -38,6 +39,7 @@ Type
     Procedure AboutDevClick(Sender: TObject);
     Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
     Procedure DeleteRecsClick(Sender: TObject);
+    procedure CorrectRecsClick(Sender: TObject);
   Private
     { Private declarations }
   Public
@@ -68,6 +70,14 @@ Begin
   InputNewForm.Destroy;
   InputNewForm := Nil;
 End;
+
+procedure TMainForm.CorrectRecsClick(Sender: TObject);
+begin
+  Application.CreateForm(TCorrectForm, CorrectForm);
+  CorrectForm.ShowModal;
+  CorrectForm.Destroy;
+  CorrectForm := Nil;
+end;
 
 Procedure TMainForm.DeleteRecsClick(Sender: TObject);
 Begin

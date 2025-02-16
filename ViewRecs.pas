@@ -12,6 +12,7 @@ type
   TViewForm = class(TForm)
     ShowGrid: TStringGrid;
     procedure FormCreate(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -24,6 +25,12 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TViewForm.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  If Key = #27 Then
+    Close;
+end;
 
 procedure TViewForm.FormCreate(Sender: TObject);
 Var

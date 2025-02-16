@@ -6,7 +6,9 @@ uses
   RecordWork in 'RecordWork.pas',
   ViewRecs in 'ViewRecs.pas' {ViewForm},
   Main in 'Main.pas' {MainForm},
-  About in 'About.pas' {AboutForm};
+  About in 'About.pas' {AboutForm},
+  CorrRecs in 'CorrRecs.pas' {CorrectForm},
+  CorrectSelected in 'CorrectSelected.pas' {CorrectSelectedForm};
 
 {$R *.res}
 

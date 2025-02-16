@@ -140,6 +140,14 @@
             <Form>AboutForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="CorrRecs.pas">
+            <Form>CorrectForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="CorrectSelected.pas">
+            <Form>CorrectSelectedForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
