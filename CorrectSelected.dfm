@@ -119,6 +119,7 @@ object CorrectSelectedForm: TCorrectSelectedForm
     Height = 25
     Caption = #1059#1076#1072#1083#1080#1090#1100
     TabOrder = 6
+    OnClick = DeleteBtnClick
   end
   object SaveDialog1: TSaveDialog
     Filter = #1041#1080#1085#1072#1088#1085#1099#1081' '#1092#1072#1081#1083'(.bin)|*.bin'

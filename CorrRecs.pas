@@ -11,13 +11,12 @@ uses
 type
   TCorrectForm = class(TForm)
     ShowGrid: TStringGrid;
-    ConfirmBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     Procedure FillGrid(Recs: TRecArray);
     procedure ShowGridSelectCell(Sender: TObject; ACol, ARow: LongInt;
       var CanSelect: Boolean);
-    procedure ConfirmBtnClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
       Recs: TRecArray;
   public
@@ -31,6 +30,13 @@ implementation
 
 {$R *.dfm}
 
+procedure TCorrectForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+Var
+  I: Integer;
+begin
+  RewriteRecsToFile(Recs, 'dat.bin');
+end;
+
 procedure TCorrectForm.FormCreate(Sender: TObject);
 Var
   I: Integer;
@@ -41,21 +47,18 @@ begin
   ShowGrid.Cells[3, 0] := 'Назначение';
   ShowGrid.Cells[4, 0] := 'Дата выпуска';
   Recs := LoadRecsFromFile('dat.bin');
-  ShowGrid.RowCount := Length(Recs) + 1;
   SortRecsByInv(Recs);
   FillGrid(Recs);
 end;
 
-procedure TCorrectForm.ConfirmBtnClick(Sender: TObject);
-begin
-  RewriteRecsToFile(Recs, 'dat.bin');
-end;
+
 
 Procedure TCorrectForm.FillGrid(Recs: TRecArray);
 Var
   I: Integer;
 Begin
-  For I := 0 To High(Recs) Do
+  ShowGrid.RowCount := Length(Recs) + 1;
+  For I := Low(Recs) To High(Recs) Do
   Begin
     ShowGrid.Cells[0, I + 1] := IntToStr(Recs[I].InvNumber);
     ShowGrid.Cells[1, I + 1] := IntToStr(Recs[I].Price);
@@ -71,6 +74,7 @@ begin
     Close;
 end;
 
+
 procedure TCorrectForm.ShowGridSelectCell(Sender: TObject; ACol, ARow: LongInt;
       var CanSelect: Boolean);
 Begin
@@ -79,6 +83,9 @@ Begin
   CorrectSelectedForm.ShowModal;
   CorrectSelectedForm.Destroy;
   CorrectSelectedForm := Nil;
+  SortRecsByInv(Recs);
+  If(Recs[0].InvNumber = -1) Then
+    DeleteRec(Recs, 0);
   FillGrid(Recs);
 End;
 end.

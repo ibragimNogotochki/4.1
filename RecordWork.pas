@@ -27,6 +27,8 @@ Procedure RewriteRec(RecPointer: PAppliance; Const InvNumber, Price: Integer;
 
 Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
 
+procedure DeleteRec(Var A: TRecArray; Index: Integer);
+
 Procedure ClearFile(Const FilePath: String);
 
 Function LoadRecsFromFile(Const FilePath: String): TRecArray;
@@ -57,8 +59,18 @@ Begin
   Rewrite(WFile);
   For I := Low(Recs) To High(Recs) Do
     Write(WFile, Recs[I]);
-    CloseFile(WFile);
+  CloseFile(WFile);
 End;
+
+procedure DeleteRec(Var A: TRecArray; Index: Integer);
+var
+  Last: Integer;
+begin
+  Last := high(A);
+  if Index < Last then
+    move(A[Index + 1], A[Index], (Last - Index) * sizeof(A[Index]));
+  setLength(A, Last);
+end;
 
 Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
 Var
@@ -84,7 +96,7 @@ Var
 Begin
   AssignFile(RFile, FilePath);
   Reset(RFile);
-  SetLength(Res, FileSize(RFile));
+  setLength(Res, FileSize(RFile));
   For I := 0 To High(Res) Do
     Read(RFile, Res[I]);
   CloseFile(RFile);

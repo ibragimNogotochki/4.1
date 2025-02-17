@@ -32,6 +32,7 @@ type
     procedure BlockNonNums(Sender: TObject; var Key: Char);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
+    procedure DeleteBtnClick(Sender: TObject);
   private
     IsInvNumCorrect, IsPriceCorrect, IsNameCorrect, IsPurposeCorrect,
       IsDateCorrect: Boolean;
@@ -54,6 +55,17 @@ procedure TCorrectSelectedForm.BlockNonNums(Sender: TObject; var Key: Char);
 begin
   If Not CharInSet(Key, ['0' .. '9', #8]) Then
     Key := #0;
+end;
+
+procedure TCorrectSelectedForm.DeleteBtnClick(Sender: TObject);
+begin
+  ExitCode := MessageBox(CorrectSelectedForm.Handle, 'Выйти?', 'Подтверждение', MB_ICONQUESTION + MB_YESNO);
+  If ExitCode = ID_YES Then
+  Begin
+    RecToCorrectPointer.InvNumber := -1;
+    Close;
+  End;
+  Close;
 end;
 
 procedure TCorrectSelectedForm.FormCreate(Sender: TObject);
