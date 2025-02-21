@@ -50,7 +50,6 @@ Type
   Public
     { Public declarations }
   End;
-
 Var
   InputNewForm: TInputNewForm;
 
@@ -119,10 +118,11 @@ Procedure TInputNewForm.WriteBtnClick(Sender: TObject);
 Const
   FilePath: String = 'dat.bin';
 Var
-  RecToWrite: TAppliance;
+  RecToWrite: TCorrection;
 Begin
-  RecToWrite := CreateRec(StrToInt(InvNumEdit.Text), StrToInt(PriceEdit.Text), NameEdit.Text, PurposeEdit.Text, StrToInt(DayBox.Text), StrToInt(MonthBox.Text), StrToInt(YearEdit.Text));
-  WriteRecToFile(RecToWrite, FilePath);
+  RecToWrite.Op := TOperation.OP_ADD;
+  RecToWrite.Rec := CreateRec(StrToInt(InvNumEdit.Text), StrToInt(PriceEdit.Text), NameEdit.Text, PurposeEdit.Text, StrToInt(DayBox.Text), StrToInt(MonthBox.Text), StrToInt(YearEdit.Text));
+  WriteCorrToFile(RecToWrite, FilePath);
   MessageBox(Self.Handle, 'Запись добавлена!', 'Успех', MB_OK);
 End;
 

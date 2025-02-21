@@ -7,10 +7,11 @@ Uses
 
 Type
   TProdDate = Record
-    Day: 1..31;
-    Month: 1..12;
+    Day: 1 .. 31;
+    Month: 1 .. 12;
     Year: Word;
   End;
+
   TAppliance = Record
     InvNumber: Integer;
     Name: String[10];
@@ -18,28 +19,33 @@ Type
     ProdDate: TProdDate;
     Price: Integer;
   End;
+
   TOperation = (OP_DEL, OP_EDIT, OP_ADD);
-  TCorr = Record
+
+  TCorrection = Record
     Rec: TAppliance;
     Id: Integer;
     Op: TOperation;
   End;
+
   TRecArray = Array Of TAppliance;
+  TCorrArray = Array Of TCorrection;
   PAppliance = ^TAppliance;
 
-Function CreateRec(Const InvNumber, Price: Integer;
-  Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte; ProdYear: Word): TAppliance;
+Function CreateRec(Const InvNumber, Price: Integer; Const Name, Purpose: String;
+  ProdDay: Byte; ProdMonth: Byte; ProdYear: Word): TAppliance;
 
 Procedure RewriteRecsToFile(Var Recs: TRecArray; Const FilePath: String);
 
 Function RewriteRec(RecPointer: PAppliance; Const InvNumber, Price: Integer;
-  Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte; ProdYear: Word): TAppliance;
+  Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte; ProdYear: Word)
+  : TAppliance;
 
 Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
 
 Function DateToStr(Date: TProdDate): String;
 
-procedure DeleteRec (Var A: TRecArray; Index: Integer);
+procedure DeleteRec(Var A: TRecArray; Index: Integer);
 
 Procedure ClearFile(Const FilePath: String);
 
@@ -47,10 +53,17 @@ Function LoadRecsFromFile(Const FilePath: String): TRecArray;
 
 Procedure SortRecsByInv(Var Recs: TRecArray);
 
+Function LoadCorrsFromFile(Const FilePath: String): TCorrArray;
+
+Function ReadRec(FilePath: String; Pos: Integer): TAppliance;
+
+Procedure WriteCorrToFile(Const RecToWrite: TCorrection;
+  Const FilePath: String);
+
 Implementation
 
-Function CreateRec(Const InvNumber, Price: Integer;
-  Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte; ProdYear: Word): TAppliance;
+Function CreateRec(Const InvNumber, Price: Integer; Const Name, Purpose: String;
+  ProdDay: Byte; ProdMonth: Byte; ProdYear: Word): TAppliance;
 Var
   Res: TAppliance;
 Begin
@@ -76,13 +89,28 @@ Begin
   CloseFile(WFile);
 End;
 
+Function ReadRec(FilePath: String; Pos: Integer): TAppliance;
+Var
+  F: File Of TAppliance;
+  Res: TAppliance;
+Begin
+  AssignFile(F, FilePath);
+  Reset(F);
+  Seek(F, Pos);
+  Read(F, Res);
+  CloseFile(F);
+  ReadRec := Res;
+End;
+
 Function DateToStr(Date: TProdDate): String;
 Var
   Res: String;
 Begin
-  Res := IntToStr(Date.Day) + '/' + IntToStr(Date.Month) + '/' + InttoStr(Date.Year);
+  Res := IntToStr(Date.Day) + '/' + IntToStr(Date.Month) + '/' +
+    IntToStr(Date.Year);
   DateToStr := Res;
 End;
+
 procedure DeleteRec(Var A: TRecArray; Index: Integer);
 var
   Last: Integer;
@@ -100,9 +128,41 @@ Var
   PrevRecs: TRecArray;
   I: Integer;
 Begin
-  AssignFile(WFile, FilePath);
   If FileExists(FilePath) Then
     PrevRecs := LoadRecsFromFile(FilePath);
+  AssignFile(WFile, FilePath);
+  Rewrite(WFile);
+  For I := Low(PrevRecs) To High(PrevRecs) Do
+    Write(WFile, PrevRecs[I]);
+  Write(WFile, RecToWrite);
+  CloseFile(WFile);
+End;
+
+Function LoadCorrsFromFile(Const FilePath: String): TCorrArray;
+Var
+  RFile: File Of TCorrection;
+  Res: TCorrArray;
+  I, RecCount: Integer;
+Begin
+  AssignFile(RFile, FilePath);
+  Reset(RFile);
+  setLength(Res, FileSize(RFile));
+  For I := 0 To High(Res) Do
+    Read(RFile, Res[I]);
+  CloseFile(RFile);
+  LoadCorrsFromFile := Res;
+End;
+
+Procedure WriteCorrToFile(Const RecToWrite: TCorrection;
+  Const FilePath: String);
+Var
+  WFile: File Of TCorrection;
+  PrevRecs: TCorrArray;
+  I: Integer;
+Begin
+  If FileExists(FilePath) Then
+    PrevRecs := LoadCorrsFromFile(FilePath);
+  AssignFile(WFile, FilePath);
   Rewrite(WFile);
   For I := Low(PrevRecs) To High(PrevRecs) Do
     Write(WFile, PrevRecs[I]);
@@ -126,7 +186,8 @@ Begin
 End;
 
 Function RewriteRec(RecPointer: PAppliance; Const InvNumber, Price: Integer;
-  Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte; ProdYear: Word): TAppliance;
+  Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte; ProdYear: Word)
+  : TAppliance;
 
 Begin
   RecPointer.InvNumber := InvNumber;
@@ -165,4 +226,32 @@ Begin
   End;
 End;
 
+Procedure ConfirmChanges(MainFileName, CorrFileName: String);
+Const
+  TempFileName : String = 'temp.bin';
+Var
+  I, Count: Integer;
+  PrevRecs: TRecArray;
+  MainFile: File Of TAppliance;
+  CorrFile: File Of TCorrection;
+  NextCorrection: TCorrection;
+Begin
+  AssignFile(MainFile, MainFileName);
+  AssignFile(CorrFile, CorrFileName);
+  Reset(CorrFile);
+  If FileExists(MainFileName) Then
+    PrevRecs := LoadRecsFromFile(MainFileName);
+  Rewrite(MainFile);
+  For I := Low(PrevRecs) To High(PrevRecs) Do
+    Write(MainFile, PrevRecs[I]);
+  Count := FileSize(CorrFile) - 1;
+  For I := 0 To Count Do
+  Begin
+    Read(CorrFile, NextCorrection);
+    If NextCorrection.Op = TOperation.OP_EDIT Then
+    Begin
+
+    End;
+  End;
+End;
 End.

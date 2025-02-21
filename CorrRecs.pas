@@ -16,9 +16,8 @@ type
     Procedure FillGrid(Recs: TRecArray);
     procedure ShowGridSelectCell(Sender: TObject; ACol, ARow: LongInt;
       var CanSelect: Boolean);
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
-      Recs: TRecArray;
+      NewCorrectable: TCorrection;
   public
       SelectedRecPointer: PAppliance;
   end;
@@ -30,16 +29,12 @@ implementation
 
 {$R *.dfm}
 
-procedure TCorrectForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-Var
-  I: Integer;
-begin
-  RewriteRecsToFile(Recs, 'dat.bin');
-end;
+
 
 procedure TCorrectForm.FormCreate(Sender: TObject);
 Var
   I: Integer;
+  Var Recs: TRecArray;
 begin
   ShowGrid.Cells[0, 0] := 'Инв. номер';
   ShowGrid.Cells[1, 0] := 'Цена(коп.)';
@@ -47,7 +42,6 @@ begin
   ShowGrid.Cells[3, 0] := 'Назначение';
   ShowGrid.Cells[4, 0] := 'Дата выпуска';
   Recs := LoadRecsFromFile('dat.bin');
-  SortRecsByInv(Recs);
   FillGrid(Recs);
 end;
 
@@ -77,15 +71,20 @@ end;
 
 procedure TCorrectForm.ShowGridSelectCell(Sender: TObject; ACol, ARow: LongInt;
       var CanSelect: Boolean);
+Var
+  Recs: TRecArray;
 Begin
-  SelectedRecPointer := @Recs[ARow - 1];
+  NewCorrectable.Rec := ReadRec('dat.bin', ARow - 1);
+  NewCorrectable.Id := ARow - 1;
+  SelectedRecPointer := @NewCorrectable.Rec;
   Application.CreateForm(TCorrectSelectedForm, CorrectSelectedForm);
   CorrectSelectedForm.ShowModal;
   CorrectSelectedForm.Destroy;
   CorrectSelectedForm := Nil;
-  SortRecsByInv(Recs);
-  If(Recs[0].InvNumber = -1) Then
-    DeleteRec(Recs, 0);
-  FillGrid(Recs);
+  If SelectedRecPointer.InvNumber = -1 Then
+    NewCorrectable.Op := TOperation.OP_DEL
+  Else
+    NewCorrectable.Op := TOperation.OP_EDIT;
+  WriteCorrToFile (NewCorrectable, 'corr.bin');
 End;
 end.

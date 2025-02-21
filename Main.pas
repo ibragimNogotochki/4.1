@@ -34,6 +34,7 @@ Type
     ViewRecs: TBitBtn;
     DeleteRecs: TBitBtn;
     CorrectRecs: TBitBtn;
+    ConfirmBtn: TBitBtn;
     Procedure AddRecsClick(Sender: TObject);
     Procedure ViewRecsClick(Sender: TObject);
     Procedure AboutDevClick(Sender: TObject);
@@ -97,10 +98,7 @@ End;
 Procedure TMainForm.FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
 Begin
   ExitCode := MessageBox(MainForm.Handle, 'Выйти?', 'Подтверждение', MB_ICONQUESTION + MB_YESNO);
-  If ExitCode = ID_YES Then
-    CanClose := True
-  Else
-    CanClose := False;
+  CanClose := ExitCode = ID_YES;
 End;
 
 End.
