@@ -6,28 +6,40 @@ Uses
   System.SysUtils;
 
 Type
+  TProdDate = Record
+    Day: 1..31;
+    Month: 1..12;
+    Year: Word;
+  End;
   TAppliance = Record
     InvNumber: Integer;
     Name: String[10];
     Purpose: String[70];
-    ProdDate: String[10];
+    ProdDate: TProdDate;
     Price: Integer;
   End;
-
+  TOperation = (OP_DEL, OP_EDIT, OP_ADD);
+  TCorr = Record
+    Rec: TAppliance;
+    Id: Integer;
+    Op: TOperation;
+  End;
   TRecArray = Array Of TAppliance;
   PAppliance = ^TAppliance;
 
 Function CreateRec(Const InvNumber, Price: Integer;
-  Const Name, Purpose, ProdDate: String): TAppliance;
+  Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte; ProdYear: Word): TAppliance;
 
 Procedure RewriteRecsToFile(Var Recs: TRecArray; Const FilePath: String);
 
-Procedure RewriteRec(RecPointer: PAppliance; Const InvNumber, Price: Integer;
-  Const Name, Purpose, ProdDate: String);
+Function RewriteRec(RecPointer: PAppliance; Const InvNumber, Price: Integer;
+  Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte; ProdYear: Word): TAppliance;
 
 Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
 
-procedure DeleteRec(Var A: TRecArray; Index: Integer);
+Function DateToStr(Date: TProdDate): String;
+
+procedure DeleteRec (Var A: TRecArray; Index: Integer);
 
 Procedure ClearFile(Const FilePath: String);
 
@@ -38,7 +50,7 @@ Procedure SortRecsByInv(Var Recs: TRecArray);
 Implementation
 
 Function CreateRec(Const InvNumber, Price: Integer;
-  Const Name, Purpose, ProdDate: String): TAppliance;
+  Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte; ProdYear: Word): TAppliance;
 Var
   Res: TAppliance;
 Begin
@@ -46,7 +58,9 @@ Begin
   Res.Price := Price;
   Res.Name := Name;
   Res.Purpose := Purpose;
-  Res.ProdDate := ProdDate;
+  Res.ProdDate.Day := ProdDay;
+  Res.ProdDate.Month := ProdMonth;
+  Res.ProdDate.Year := ProdYear;
   CreateRec := Res;
 End;
 
@@ -62,13 +76,21 @@ Begin
   CloseFile(WFile);
 End;
 
+Function DateToStr(Date: TProdDate): String;
+Var
+  Res: String;
+Begin
+  Res := IntToStr(Date.Day) + '/' + IntToStr(Date.Month) + '/' + InttoStr(Date.Year);
+  DateToStr := Res;
+End;
 procedure DeleteRec(Var A: TRecArray; Index: Integer);
 var
   Last: Integer;
+  F: File Of TAppliance;
 begin
   Last := high(A);
   if Index < Last then
-    move(A[Index + 1], A[Index], (Last - Index) * sizeof(A[Index]));
+    move(A[Index + 1], A[Index], (Last - Index) * Sizeof(A[Index]));
   setLength(A, Last);
 end;
 
@@ -103,14 +125,17 @@ Begin
   LoadRecsFromFile := Res;
 End;
 
-Procedure RewriteRec(RecPointer: PAppliance; Const InvNumber, Price: Integer;
-  Const Name, Purpose, ProdDate: String);
+Function RewriteRec(RecPointer: PAppliance; Const InvNumber, Price: Integer;
+  Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte; ProdYear: Word): TAppliance;
+
 Begin
   RecPointer.InvNumber := InvNumber;
   RecPointer.Price := Price;
   RecPointer.Name := Name;
   RecPointer.Purpose := Purpose;
-  RecPointer.ProdDate := ProdDate;
+  RecPointer.ProdDate.Day := ProdDay;
+  RecPointer.ProdDate.Month := ProdMonth;
+  RecPointer.ProdDate.Year := ProdYear;
 End;
 
 Procedure ClearFile(Const FilePath: String);

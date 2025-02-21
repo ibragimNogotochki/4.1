@@ -44,14 +44,13 @@ begin
   ShowGrid.Cells[4, 0] := 'Дата выпуска';
   Recs := LoadRecsFromFile('dat.bin');
   ShowGrid.RowCount := Length(Recs) + 1;
-  SortRecsByInv(Recs);
   For I := 0 To High(Recs) Do
   Begin
     ShowGrid.Cells[0, I + 1] := IntToStr(Recs[I].InvNumber);
     ShowGrid.Cells[1, I + 1] := IntToStr(Recs[I].Price);
     ShowGrid.Cells[2, I + 1] := Recs[I].Name;
     ShowGrid.Cells[3, I + 1] := Recs[I].Purpose;
-    ShowGrid.Cells[4, I + 1] := Recs[I].ProdDate;
+    ShowGrid.Cells[4, I + 1] := DateToStr(Recs[I].ProdDate);
   End;
 end;
 

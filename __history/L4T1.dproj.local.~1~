@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.052,=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\About.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.396,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\Unit1.dfm=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\ViewRecs.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.396,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\Unit1.pas=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\ViewRecs.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.018,=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.230,=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.557,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\InputNew.dfm=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Main.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.125,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Main.pas=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.446,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.2\RecordWork.pas=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.137,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.2\InputNew.dfm=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\InputNew.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.259,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\Main.dfm=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.881,=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.293,=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.557,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\InputNew.pas=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Main.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.125,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Main.dfm=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.195,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.2\L4T1.dproj=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.951,=C:\Users\IbragimNogotochki\Documents\Embarcadero\Studio\Projects\4.1\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.824,=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\CorrRecs.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.259,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\Main.pas=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.121,=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.1\CorrectSelected.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.137,C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\4.2\InputNew.pas=C:\Users\ALEX\Documents\Embarcadero\Studio\Projects\InputNew.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="InputNew.pas"/>
+    <File Path="InputNew.dfm"/>
+    <File Path="RecordWork.pas"/>
+    <File Path="ViewRecs.pas"/>
+    <File Path="ViewRecs.dfm"/>
+    <File Path="Main.pas"/>
+    <File Path="Main.dfm"/>
+    <File Path="CorrRecs.pas"/>
+    <File Path="CorrRecs.dfm"/>
+    <File Path="About.pas"/>
+    <File Path="About.dfm"/>
+    <File Path="CorrectSelected.pas"/>
+    <File Path="CorrectSelected.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>

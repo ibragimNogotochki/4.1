@@ -3,9 +3,9 @@ object CorrectSelectedForm: TCorrectSelectedForm
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  Caption = #1050#1086#1088#1088#1077#1082#1090#1080#1088#1086#1074#1082#1072' '#1079#1072#1087#1080#1089#1080
+  Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1079#1072#1087#1080#1089#1080
   ClientHeight = 83
-  ClientWidth = 576
+  ClientWidth = 641
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,6 +14,7 @@ object CorrectSelectedForm: TCorrectSelectedForm
   Font.Style = []
   KeyPreview = True
   Position = poMainFormCenter
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   TextHeight = 15
@@ -76,31 +77,22 @@ object CorrectSelectedForm: TCorrectSelectedForm
     TabOrder = 1
     OnChange = NameEditChange
   end
-  object ProdDateEdit: TEdit
-    Left = 381
-    Top = 45
-    Width = 103
-    Height = 23
-    MaxLength = 10
-    TabOrder = 2
-    OnChange = ProdDateEditChange
-  end
   object PurposeEdit: TEdit
     Left = 254
     Top = 45
     Width = 121
     Height = 23
-    TabOrder = 3
+    TabOrder = 2
     OnChange = PurposeEditChange
   end
   object WriteBtn: TBitBtn
-    Left = 490
-    Top = 45
+    Left = 555
+    Top = 44
     Width = 78
     Height = 25
     Caption = #1047#1072#1087#1080#1089#1072#1090#1100
     Enabled = False
-    TabOrder = 4
+    TabOrder = 3
     OnClick = WriteBtnClick
   end
   object PriceEdit: TEdit
@@ -108,17 +100,90 @@ object CorrectSelectedForm: TCorrectSelectedForm
     Top = 45
     Width = 71
     Height = 23
-    TabOrder = 5
+    TabOrder = 4
     OnChange = PriceEditChange
     OnKeyPress = BlockNonNums
   end
+  object DayBox: TComboBox
+    Left = 381
+    Top = 45
+    Width = 44
+    Height = 23
+    Style = csDropDownList
+    TabOrder = 5
+    OnChange = DayBoxChange
+    Items.Strings = (
+      '1'
+      '2'
+      '3'
+      '4'
+      '5'
+      '6'
+      '7'
+      '8'
+      '9'
+      '10'
+      '11'
+      '12'
+      '13'
+      '14'
+      '15'
+      '16'
+      '17'
+      '18'
+      '19'
+      '20'
+      '21'
+      '22'
+      '23'
+      '24'
+      '25'
+      '26'
+      '27'
+      '28'
+      '29'
+      '30'
+      '31')
+  end
+  object MonthBox: TComboBox
+    Left = 431
+    Top = 45
+    Width = 44
+    Height = 23
+    Style = csDropDownList
+    TabOrder = 6
+    OnChange = MonthBoxChange
+    Items.Strings = (
+      '1'
+      '2'
+      '3'
+      '4'
+      '5'
+      '6'
+      '7'
+      '8'
+      '9'
+      '10'
+      '11'
+      '12')
+  end
+  object YearEdit: TEdit
+    Left = 481
+    Top = 45
+    Width = 56
+    Height = 23
+    MaxLength = 4
+    TabOrder = 7
+    OnChange = YearEditChange
+    OnKeyPress = BlockNonNums
+  end
   object DeleteBtn: TBitBtn
-    Left = 490
-    Top = 14
-    Width = 75
+    Left = 555
+    Top = 13
+    Width = 78
     Height = 25
     Caption = #1059#1076#1072#1083#1080#1090#1100
-    TabOrder = 6
+    TabOrder = 8
     OnClick = DeleteBtnClick
   end
   object SaveDialog1: TSaveDialog
