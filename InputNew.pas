@@ -64,12 +64,14 @@ Begin
 End;
 
 Procedure TInputNewForm.FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
+Const
+  FilePath: String = 'dat.bin';
 Var
   Recs: TRecArray;
 Begin
-  Recs := LoadRecsFromFile('dat.bin');
+  Recs := LoadRecsFromFile(FilePath);
   SortRecsByInv(Recs);
-  RewriteRecsToFile(Recs, 'dat.bin');
+  RewriteRecsToFile(Recs, FilePath);
 End;
 
 Procedure TInputNewForm.FormKeyPress(Sender: TObject; Var Key: Char);

@@ -45,6 +45,8 @@ begin
 end;
 
 procedure TViewForm.FormCreate(Sender: TObject);
+Const
+  FileName: String = 'dat.bin';
 Var
   I: Integer;
 begin
@@ -53,7 +55,7 @@ begin
   ShowGrid.Cells[2, 0] := 'Наименование';
   ShowGrid.Cells[3, 0] := 'Назначение';
   ShowGrid.Cells[4, 0] := 'Дата выпуска';
-  Recs := LoadRecsFromFile('dat.bin');
+  Recs := LoadRecsFromFile(FileName);
   FillGrid(Recs);
 end;
 

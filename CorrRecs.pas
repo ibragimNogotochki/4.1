@@ -32,14 +32,17 @@ implementation
 
 
 procedure TCorrectForm.FormCreate(Sender: TObject);
-  Var Recs: TRecArray;
+Const
+   FileName: String = 'dat.bin';
+Var
+    Recs: TRecArray;
 begin
   ShowGrid.Cells[0, 0] := 'Инв. номер';
   ShowGrid.Cells[1, 0] := 'Цена(коп.)';
   ShowGrid.Cells[2, 0] := 'Наименование';
   ShowGrid.Cells[3, 0] := 'Назначение';
   ShowGrid.Cells[4, 0] := 'Дата выпуска';
-  Recs := LoadRecsFromFile('dat.bin');
+  Recs := LoadRecsFromFile(FileName);
   FillGrid(Recs);
 end;
 
@@ -69,8 +72,11 @@ end;
 
 procedure TCorrectForm.ShowGridSelectCell(Sender: TObject; ACol, ARow: LongInt;
       var CanSelect: Boolean);
+Const
+  MainFileName: String = 'dat.bin';
+  CorrFileName: String = 'corr.bin';
 Begin
-  NewCorrectable.Rec := ReadRec('dat.bin', ARow - 1);
+  NewCorrectable.Rec := ReadRec(MainFileName, ARow - 1);
   NewCorrectable.Id := ARow - 1;
   SelectedRecPointer := @NewCorrectable.Rec;
   Application.CreateForm(TCorrectSelectedForm, CorrectSelectedForm);
@@ -81,6 +87,6 @@ Begin
     NewCorrectable.Op := TOperation.OP_DEL
   Else
     NewCorrectable.Op := TOperation.OP_EDIT;
-  WriteCorrToFile (NewCorrectable, 'corr.bin');
+  WriteCorrToFile (NewCorrectable, CorrFileName);
 End;
 end.
