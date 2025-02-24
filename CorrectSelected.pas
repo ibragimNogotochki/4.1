@@ -74,6 +74,8 @@ begin
   DayBox.ItemIndex := RecToChange.ProdDate.Day - 1;
   MonthBox.ItemIndex := RecToChange.ProdDate.Month - 1;
   YearEdit.Text := IntToStr(RecToChange.ProdDate.Year);
+  IsDayCorrect := True;
+  IsMonthCorrect := True;
 end;
 
 procedure TCorrectSelectedForm.FormKeyPress(Sender: TObject; var Key: Char);
@@ -102,6 +104,8 @@ end;
 
 procedure TCorrectSelectedForm.InvNumEditChange(Sender: TObject);
 begin
+  If ((InvNumEdit.Text <> '' )And (InvNumEdit.Text[1] = '0')) Then
+    InvNumEdit.Text := '';
   IsInvNumCorrect := Not(InvNumEdit.Text = '');
   WriteBtn.Enabled := CheckInputs;
 end;
@@ -114,6 +118,8 @@ end;
 
 procedure TCorrectSelectedForm.PriceEditChange(Sender: TObject);
 begin
+  If ((PriceEdit.Text <> '' )And (PriceEdit.Text[1] = '0')) Then
+    PriceEdit.Text := '';
   IsPriceCorrect := Not(PriceEdit.Text = '');
   WriteBtn.Enabled := CheckInputs;
 end;
@@ -138,6 +144,8 @@ End;
 
 procedure TCorrectSelectedForm.YearEditChange(Sender: TObject);
 begin
+  If ((YearEdit.Text <> '' )And (YearEdit.Text[1] = '0')) Then
+    YearEdit.Text := '';
   IsYearCorrect := Not(YearEdit.Text = '');
   WriteBtn.Enabled := CheckInputs;
 end;

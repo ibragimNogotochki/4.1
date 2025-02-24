@@ -3,7 +3,7 @@ Unit RecordWork;
 Interface
 
 Uses
-  System.SysUtils;
+  System.SysUtils, Winapi.Windows;
 
 Type
   TProdDate = Record
@@ -40,11 +40,8 @@ Procedure RewriteRecsToFile(Var Recs: TRecArray; Const FilePath: String);
 Function RewriteRec(RecPointer: PAppliance; Const InvNumber, Price: Integer; Const Name, Purpose: String; ProdDay: Byte; ProdMonth: Byte;
     ProdYear: Word): TAppliance;
 
-Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
 
-Function DateToStr(Date: TProdDate): String;
-
-Procedure DeleteRec(Var A: TRecArray; Index: Integer);
+Function DateToStr(Const Date: TProdDate): String;
 
 Procedure ClearFile(Const FilePath: String);
 
@@ -52,13 +49,13 @@ Function LoadRecsFromFile(Const FilePath: String): TRecArray;
 
 Procedure SortRecsByInv(Var Recs: TRecArray);
 
-Function LoadCorrsFromFile(Const FilePath: String): TCorrArray;
-
-Function ReadRec(FilePath: String; Pos: Integer): TAppliance;
+Function ReadRec(Const FilePath: String; Const Pos: Integer): TAppliance;
 
 Procedure WriteCorrToFile(Const RecToWrite: TCorrection; Const FilePath: String);
 
-Procedure ConfirmChanges(MainFileName, CorrFileName: String);
+Procedure SortRecsInFile(FileName: String);
+
+Procedure ConfirmChanges (Const MainFileName, CorrFileName: String);
 
 Implementation
 
@@ -101,7 +98,7 @@ Begin
   CloseFile(WFile);
 End;
 
-Function ReadRec(FilePath: String; Pos: Integer): TAppliance;
+Function ReadRec(Const FilePath: String; Const Pos: Integer): TAppliance;
 Var
   F: File Of TAppliance;
   Res: TAppliance;
@@ -114,39 +111,12 @@ Begin
   ReadRec := Res;
 End;
 
-Function DateToStr(Date: TProdDate): String;
+Function DateToStr(Const Date: TProdDate): String;
 Var
   Res: String;
 Begin
   Res := IntToStr(Date.Day) + '/' + IntToStr(Date.Month) + '/' + IntToStr(Date.Year);
   DateToStr := Res;
-End;
-
-Procedure DeleteRec(Var A: TRecArray; Index: Integer);
-Var
-  Last: Integer;
-  F: File Of TAppliance;
-Begin
-  Last := High(A);
-  If Index < Last Then
-    Move(A[Index + 1], A[Index], (Last - Index) * Sizeof(A[Index]));
-  SetLength(A, Last);
-End;
-
-Procedure WriteRecToFile(Const RecToWrite: TAppliance; Const FilePath: String);
-Var
-  WFile: File Of TAppliance;
-  PrevRecs: TRecArray;
-  I: Integer;
-Begin
-  If FileExists(FilePath) Then
-    PrevRecs := LoadRecsFromFile(FilePath);
-  AssignFile(WFile, FilePath);
-  Rewrite(WFile);
-  For I := Low(PrevRecs) To High(PrevRecs) Do
-    Write(WFile, PrevRecs[I]);
-  Write(WFile, RecToWrite);
-  CloseFile(WFile);
 End;
 
 Function LoadCorrsFromFile(Const FilePath: String): TCorrArray;
@@ -252,6 +222,16 @@ Begin
     End;
   End;
 End;
+
+Procedure SortRecsInFile(FileName: String);
+Var
+  Recs: TRecArray;
+Begin
+  Recs := LoadRecsFromFile(FileName);
+  SortRecsByInv(Recs);
+  RewriteRecsToFile(Recs, FileName);
+End;
+
 Procedure SortCorrsInfile(FileName: String);
 Var
   Corrs: TCorrArray;
@@ -260,7 +240,7 @@ Begin
   SortCorrsById(Corrs);
   RewriteCorrsToFile(Corrs, FileName);
 End;
-Procedure ConfirmChanges(MainFileName, CorrFileName: String);
+Procedure ConfirmChanges(Const MainFileName, CorrFileName: String);
 Const
   TempFileName : String = 'temp.bin';
 Var
@@ -299,20 +279,28 @@ Begin
   Reset(Mainfile);
   AssignFile(TempFile, TempFileName);
   Rewrite(TempFile);
+  If NextCorrection.Op <> OP_DEL Then
+    NextCorrection.Id := -1;
   While Not EOF(MainFile) Do
   Begin
-    If((NextCorrection.Id = FilePos(MainFile)) Or (NextCorrection.Op <> OP_DEL)) Then
+    If(NextCorrection.Id = FilePos(MainFile)) Then
+    Begin
       While Not (EOF(CorrFile) Or (NextCorrection.Op = OP_DEL)) Do
-        Read(CorrFile, NextCorrection)
-    Else
+        Read(CorrFile, NextCorrection);
+      Seek(MainFile, FilePos(MainFile) + 1)
+    End;
+    If (Not EOF(MainFile)) Then
     Begin
       Read(MainFile, NextRec);
       Write(TempFile, NextRec);
-    End;
+    End
+    Else
+      Seek(MainFile, FilePos(MainFile) + 1);
   End;
   Close(TempFile);
   Close(MainFile);
   Close(CorrFile);
+  System.SysUtils.DeleteFile(MainFileName);
   RenameFile(TempFileName, MainFileName);
   ClearFile(CorrFileName);
 End;

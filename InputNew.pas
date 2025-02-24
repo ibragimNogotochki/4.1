@@ -80,6 +80,8 @@ End;
 
 Procedure TInputNewForm.InvNumEditChange(Sender: TObject);
 Begin
+  If ((InvNumEdit.Text <> '' )And (InvNumEdit.Text[1] = '0')) Then
+    InvNumEdit.Text := '';
   IsInvNumCorrect := Not(InvNumEdit.Text = '');
   WriteBtn.Enabled := CheckInputs;
 End;
@@ -98,12 +100,16 @@ End;
 
 Procedure TInputNewForm.PriceEditChange(Sender: TObject);
 Begin
+  If ((PriceEdit.Text <> '' )And (PriceEdit.Text[1] = '0')) Then
+    PriceEdit.Text := '';
   IsPriceCorrect := Not(PriceEdit.Text = '');
   WriteBtn.Enabled := CheckInputs;
 End;
 
 Procedure TInputNewForm.YearEditChange(Sender: TObject);
 Begin
+  If ((YearEdit.Text <> '' )And (YearEdit.Text[1] = '0')) Then
+    YearEdit.Text := '';
   IsYearCorrect := Not(YearEdit.Text = '');
   WriteBtn.Enabled := CheckInputs;
 End;
