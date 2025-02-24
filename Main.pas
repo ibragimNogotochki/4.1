@@ -41,6 +41,7 @@ Type
     Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
     Procedure DeleteRecsClick(Sender: TObject);
     procedure CorrectRecsClick(Sender: TObject);
+    procedure ConfirmBtnClick(Sender: TObject);
   Private
     { Private declarations }
   Public
@@ -71,6 +72,11 @@ Begin
   InputNewForm.Destroy;
   InputNewForm := Nil;
 End;
+
+procedure TMainForm.ConfirmBtnClick(Sender: TObject);
+begin
+  ConfirmChanges('dat.bin', 'corr.bin');
+end;
 
 procedure TMainForm.CorrectRecsClick(Sender: TObject);
 begin

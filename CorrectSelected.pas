@@ -32,7 +32,6 @@ type
     procedure PriceEditChange(Sender: TObject);
     procedure BlockNonNums(Sender: TObject; var Key: Char);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     Procedure MonthBoxChange(Sender: TObject);
     Procedure DayBoxChange(Sender: TObject);
     Function CheckInputs(): Boolean;
@@ -62,14 +61,6 @@ begin
     Key := #0;
 end;
 
-procedure TCorrectSelectedForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-Var
-  Recs: TRecArray;
-begin
-  Recs := LoadRecsFromFile('dat.bin');
-  SortRecsByInv(Recs);
-  RewriteRecsToFile(Recs, 'dat.bin');
-end;
 
 procedure TCorrectSelectedForm.FormCreate(Sender: TObject);
 Var
@@ -134,15 +125,13 @@ begin
   WriteBtn.Enabled := CheckInputs;
 end;
 
+
 Procedure TCorrectSelectedForm.WriteBtnClick(Sender: TObject);
-Const
-  FilePath: String = 'dat.bin';
 Var
   RecToWrite: TAppliance;
 Begin
   RecToWrite := RewriteRec(CorrRecs.CorrectForm.SelectedRecPointer, StrToInt(InvNumEdit.Text), StrToInt(PriceEdit.Text),
     NameEdit.Text, PurposeEdit.Text, StrToInt(DayBox.Text), StrToInt(MonthBox.Text), StrToInt(YearEdit.Text));
-  WriteRecToFile(RecToWrite, FilePath);
   MessageBox(Self.Handle, 'Запись изменена!', 'Успех' , MB_OK);
   Close;
 End;

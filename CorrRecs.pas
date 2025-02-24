@@ -32,8 +32,6 @@ implementation
 
 
 procedure TCorrectForm.FormCreate(Sender: TObject);
-Var
-  I: Integer;
   Var Recs: TRecArray;
 begin
   ShowGrid.Cells[0, 0] := 'Èםג. םמלונ';
@@ -71,8 +69,6 @@ end;
 
 procedure TCorrectForm.ShowGridSelectCell(Sender: TObject; ACol, ARow: LongInt;
       var CanSelect: Boolean);
-Var
-  Recs: TRecArray;
 Begin
   NewCorrectable.Rec := ReadRec('dat.bin', ARow - 1);
   NewCorrectable.Id := ARow - 1;

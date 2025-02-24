@@ -116,7 +116,7 @@ End;
 
 Procedure TInputNewForm.WriteBtnClick(Sender: TObject);
 Const
-  FilePath: String = 'dat.bin';
+  FilePath: String = 'corr.bin';
 Var
   RecToWrite: TCorrection;
 Begin

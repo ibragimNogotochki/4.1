@@ -14,7 +14,6 @@ object CorrectSelectedForm: TCorrectSelectedForm
   Font.Style = []
   KeyPreview = True
   Position = poMainFormCenter
-  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   TextHeight = 15

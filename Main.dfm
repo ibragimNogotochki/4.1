@@ -59,6 +59,7 @@ object MainForm: TMainForm
     Height = 38
     Caption = #1055#1086#1076#1090#1074#1077#1088#1076#1080#1090#1100#13#10#1080#1079#1084#1077#1085#1077#1085#1080#1103
     TabOrder = 4
+    OnClick = ConfirmBtnClick
   end
   object MainMenu1: TMainMenu
     Left = 408
