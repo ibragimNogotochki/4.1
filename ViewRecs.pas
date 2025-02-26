@@ -11,12 +11,12 @@ uses
 type
   TViewForm = class(TForm)
     ShowGrid: TStringGrid;
-    RadioButton1: TRadioButton;
+    CheckBox1: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     Procedure FillGrid(Recs: TRecArray);
     Procedure FillAccordingToTask(Recs: TRecArray);
-    procedure RadioButton1Click(Sender: TObject);
+    procedure CheckBox1Click(Sender: TObject);
   private
     Recs: TRecArray;
   public
@@ -34,14 +34,6 @@ procedure TViewForm.FormKeyPress(Sender: TObject; var Key: Char);
 begin
   If Key = #27 Then
     Close;
-end;
-
-procedure TViewForm.RadioButton1Click(Sender: TObject);
-begin
-  If RadioButton1.Checked Then
-    FillAccordingToTask(Recs)
-  Else
-    FillGrid(Recs);
 end;
 
 procedure TViewForm.FormCreate(Sender: TObject);
@@ -73,6 +65,14 @@ Begin
     ShowGrid.Cells[4, I + 1] := DateToStr(Recs[I].ProdDate);
   End;
 End;
+
+procedure TViewForm.CheckBox1Click(Sender: TObject);
+begin
+   If CheckBox1.Checked Then
+    FillAccordingToTask(Recs)
+  Else
+    FillGrid(Recs);
+end;
 
 Procedure TViewForm.FillAccordingToTask(Recs: TRecArray);
 Var

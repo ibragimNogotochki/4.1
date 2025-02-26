@@ -64,20 +64,8 @@ object MainForm: TMainForm
   object MainMenu1: TMainMenu
     Left = 408
     Top = 216
-    object Files: TMenuItem
-      Caption = #1060#1072#1081#1083#1099
-      object Open: TMenuItem
-        Caption = #1054#1090#1082#1088#1099#1090#1100
-      end
-      object Save: TMenuItem
-        Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100
-      end
-      object N12: TMenuItem
-        Caption = '-'
-      end
-      object Quit: TMenuItem
-        Caption = #1042#1099#1081#1090#1080
-      end
+    object Instruction: TMenuItem
+      Caption = #1048#1085#1089#1090#1088#1091#1082#1094#1080#1103
     end
     object AboutDev: TMenuItem
       Caption = #1054' '#1088#1072#1079#1088#1072#1073#1086#1090#1095#1080#1082#1077

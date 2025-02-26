@@ -24,12 +24,8 @@ Uses
 Type
   TMainForm = Class(TForm)
     MainMenu1: TMainMenu;
-    Files: TMenuItem;
+    Instruction: TMenuItem;
     AboutDev: TMenuItem;
-    Open: TMenuItem;
-    Save: TMenuItem;
-    N12: TMenuItem;
-    Quit: TMenuItem;
     AddNewBtn: TBitBtn;
     ViewRecs: TBitBtn;
     DeleteRecs: TBitBtn;

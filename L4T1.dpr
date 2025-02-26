@@ -8,7 +8,8 @@ uses
   Main in 'Main.pas' {MainForm},
   About in 'About.pas' {AboutForm},
   CorrRecs in 'CorrRecs.pas' {CorrectForm},
-  CorrectSelected in 'CorrectSelected.pas' {CorrectSelectedForm};
+  CorrectSelected in 'CorrectSelected.pas' {CorrectSelectedForm},
+  Instruct in 'Instruct.pas' {InstructionForm};
 
 {$R *.res}
 
@@ -16,5 +17,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TInstructionForm, InstructionForm);
   Application.Run;
 end.

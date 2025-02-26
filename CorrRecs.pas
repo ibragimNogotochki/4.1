@@ -1,42 +1,51 @@
-unit CorrRecs;
+Unit CorrRecs;
 
-interface
+Interface
 
-uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  RecordWork, Vcl.StdCtrls, Vcl.Buttons, CorrectSelected;
+Uses
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Data.DB,
+  Vcl.Grids,
+  Vcl.DBGrids,
+  RecordWork,
+  Vcl.StdCtrls,
+  Vcl.Buttons,
+  CorrectSelected;
 
-type
-  TCorrectForm = class(TForm)
+Type
+  TCorrectForm = Class(TForm)
     ShowGrid: TStringGrid;
-    procedure FormCreate(Sender: TObject);
-    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    Procedure FormCreate(Sender: TObject);
+    Procedure FormKeyPress(Sender: TObject; Var Key: Char);
     Procedure FillGrid(Recs: TRecArray);
-    procedure ShowGridSelectCell(Sender: TObject; ACol, ARow: LongInt;
-      var CanSelect: Boolean);
-  private
-      NewCorrectable: TCorrection;
-  public
-      SelectedRecPointer: PAppliance;
-  end;
+    Procedure ShowGridSelectCell(Sender: TObject; ACol, ARow: LongInt; Var CanSelect: Boolean);
+  Private
+    NewCorrectable: TCorrection;
+  Public
+    SelectedRecPointer: PAppliance;
+  End;
 
-var
+Var
   CorrectForm: TCorrectForm;
 
-implementation
+Implementation
 
 {$R *.dfm}
 
-
-
-procedure TCorrectForm.FormCreate(Sender: TObject);
+Procedure TCorrectForm.FormCreate(Sender: TObject);
 Const
-   FileName: String = 'dat.bin';
+  FileName: String = 'dat.bin';
 Var
-    Recs: TRecArray;
-begin
+  Recs: TRecArray;
+Begin
   ShowGrid.Cells[0, 0] := 'Инв. номер';
   ShowGrid.Cells[1, 0] := 'Цена(коп.)';
   ShowGrid.Cells[2, 0] := 'Наименование';
@@ -44,9 +53,7 @@ begin
   ShowGrid.Cells[4, 0] := 'Дата выпуска';
   Recs := LoadRecsFromFile(FileName);
   FillGrid(Recs);
-end;
-
-
+End;
 
 Procedure TCorrectForm.FillGrid(Recs: TRecArray);
 Var
@@ -59,19 +66,17 @@ Begin
     ShowGrid.Cells[1, I + 1] := IntToStr(Recs[I].Price);
     ShowGrid.Cells[2, I + 1] := Recs[I].Name;
     ShowGrid.Cells[3, I + 1] := Recs[I].Purpose;
-    ShowGrid.Cells[4, I + 1] :=  DateToStr(Recs[I].ProdDate);
+    ShowGrid.Cells[4, I + 1] := DateToStr(Recs[I].ProdDate);
   End;
 End;
 
-procedure TCorrectForm.FormKeyPress(Sender: TObject; var Key: Char);
-begin
+Procedure TCorrectForm.FormKeyPress(Sender: TObject; Var Key: Char);
+Begin
   If Key = #27 Then
     Close;
-end;
+End;
 
-
-procedure TCorrectForm.ShowGridSelectCell(Sender: TObject; ACol, ARow: LongInt;
-      var CanSelect: Boolean);
+Procedure TCorrectForm.ShowGridSelectCell(Sender: TObject; ACol, ARow: LongInt; Var CanSelect: Boolean);
 Const
   MainFileName: String = 'dat.bin';
   CorrFileName: String = 'corr.bin';
@@ -87,6 +92,7 @@ Begin
     NewCorrectable.Op := TOperation.OP_DEL
   Else
     NewCorrectable.Op := TOperation.OP_EDIT;
-  WriteCorrToFile (NewCorrectable, CorrFileName);
+  WriteCorrToFile(NewCorrectable, CorrFileName);
 End;
-end.
+
+End.
